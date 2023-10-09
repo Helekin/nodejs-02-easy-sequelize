@@ -24,7 +24,7 @@ const postAddProduct = async (req, res, next) => {
 
     res.redirect("/admin/products");
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error("Error creating product:", error);
     next(error);
   }
 };

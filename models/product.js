@@ -2,6 +2,8 @@ import { DataTypes } from "sequelize";
 
 import sequelize from "../config/db.js";
 
+import User from "../models/user.js";
+
 const Product = sequelize.define("product", {
   id: {
     type: DataTypes.INTEGER,
@@ -26,5 +28,8 @@ const Product = sequelize.define("product", {
     allowNull: false,
   },
 });
+
+User.hasMany(Product);
+Product.belongsTo(User);
 
 export default Product;
