@@ -14,15 +14,22 @@ const postAddProduct = async (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
 
-  await Product.create({
-    title: title,
-    price: price,
-    imageUrl: imageUrl,
-    description: description,
-  });
+  try {
+    await Product.create({
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+      description: description,
+    });
+
+    res.redirect("/admin/products");
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    next(error);
+  }
 };
 
-const getEditProduct = (req, res, next) => {
+const getEditProduct = async (req, res, next) => {
   const editMode = req.query.edit;
 
   if (!editMode) {
@@ -31,34 +38,48 @@ const getEditProduct = (req, res, next) => {
 
   const prodId = req.params.productId;
 
-  Product.findById(prodId, (product) => {
+  try {
+    const product = await Product.findByPk(prodId);
+
+    if (!product) {
+      return res.redirect("/");
+    }
+
     res.render("admin/edit-product", {
       pageTitle: "Edit Product",
       path: "/admin/edit-product",
       editing: editMode,
       product: product,
     });
-  });
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    next(error);
+  }
 };
 
-const postEditProduct = (req, res, next) => {
+const postEditProduct = async (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDescription = req.body.description;
 
-  const updatedProduct = new Product(
-    prodId,
-    updatedTitle,
-    updatedImageUrl,
-    updatedDescription,
-    updatedPrice
-  );
+  try {
+    await Product.update(
+      {
+        title: updatedTitle,
+        price: updatedPrice,
+        imageUrl: updatedImageUrl,
+        description: updatedDescription,
+      },
+      { where: { id: prodId } }
+    );
 
-  updatedProduct.save();
-
-  res.redirect("/admin/products");
+    res.redirect("/admin/products");
+  } catch (error) {
+    console.error("Error updating product:", error);
+    next(error);
+  }
 };
 
 const getProducts = async (req, res, next) => {
@@ -71,10 +92,21 @@ const getProducts = async (req, res, next) => {
   });
 };
 
-const postDeleteProduct = (req, res, next) => {
+const postDeleteProduct = async (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId);
+
+  await Product.destroy({
+    where: {
+      id: prodId,
+    },
+  });
+
   res.redirect("/admin/products");
+  try {
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    next(error);
+  }
 };
 
 export {
