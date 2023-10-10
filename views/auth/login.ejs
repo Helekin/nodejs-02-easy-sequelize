@@ -2,38 +2,52 @@
 <html lang="en">
   <head>
     <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/forms.css" />
-    <link rel="stylesheet" href="/css/auth.css" />
   </head>
 
   <body>
     <%- include('../includes/navigation.ejs') %>
     <main>
-      <% if (errorMessage) { %>
-      <div class="user-message user-message--error"><%= errorMessage %></div>
-      <% } %>
-      <form class="login-form" action="/login" method="POST" novalidate>
-        <div class="form-control">
-          <label for="email">E-Mail</label>
-          <input
-            class="<%= validationErrors.find(e => e.path === 'email') ? 'invalid' : ''%>"
-            type="email"
-            name="email"
-            id="email"
-          />
-        </div>
-        <div class="form-control">
-          <label for="password">Password</label>
-          <input
-            class="<%= validationErrors.find(e => e.path === 'password') ? 'invalid' : ''%>"
-            type="password"
-            name="password"
-            id="password"
-          />
-        </div>
+      <div class="row justify-content-md-center">
+        <div class="col-xs-12 col-md-6">
+          <div class="container">
+            <% if (errorMessage) { %>
+            <div class="alert alert-dismissible alert-danger">
+              <%= errorMessage %>
+            </div>
+            <% } %>
 
-        <button class="btn" type="submit">Login</button>
-      </form>
+            <form action="/login" method="POST" novalidate>
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'email') ? 'has-danger' : ''%>"
+              >
+                <label for="email" class="form-label mt-4">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Enter email"
+                />
+              </div>
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'password') ? 'has-danger' : ''%>"
+              >
+                <label for="password" class="form-label mt-4">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Enter password"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary mt-4 w-100">
+                Login
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
     <%- include('../includes/end.ejs') %>
   </body>

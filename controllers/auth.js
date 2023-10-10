@@ -73,9 +73,10 @@ const postSignUp = async (req, res, next) => {
     });
 
     res.redirect("/login");
-  } catch (error) {
-    console.error("Error creating user:", error);
-    next(error);
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   }
 };
 
@@ -139,9 +140,10 @@ const postLogin = async (req, res, next) => {
     req.session.jwt = req.cookies.jwt;
 
     res.redirect("/");
-  } catch (error) {
-    console.error("Sign In Failed:", error);
-    next(error);
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   }
 };
 

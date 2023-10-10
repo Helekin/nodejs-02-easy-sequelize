@@ -27,6 +27,23 @@ const Product = sequelize.define("product", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  brand: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  rating: {
+    type: DataTypes.DOUBLE,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  numReviews: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  countInStock: {
+    type: DataTypes.INTEGER,
+  },
 });
 
 User.hasMany(Product);

@@ -54,9 +54,10 @@ const getEditProduct = async (req, res, next) => {
       editing: editMode,
       product: product,
     });
-  } catch (error) {
-    console.error("Error fetching product:", error);
-    next(error);
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   }
 };
 
@@ -79,9 +80,10 @@ const postEditProduct = async (req, res, next) => {
     );
 
     res.redirect("/admin/products");
-  } catch (error) {
-    console.error("Error updating product:", error);
-    next(error);
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   }
 };
 
@@ -106,9 +108,10 @@ const postDeleteProduct = async (req, res, next) => {
 
   res.redirect("/admin/products");
   try {
-  } catch (error) {
-    console.error("Error deleting product:", error);
-    next(error);
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   }
 };
 

@@ -10,7 +10,7 @@ import sequelize from "./config/db.js";
 
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
-import shopRoutes from "./routes/shop.js";
+// import shopRoutes from "./routes/shop.js";
 
 import { get404 } from "./controllers/error.js";
 import User from "./models/user.js";
@@ -77,7 +77,7 @@ app.use(async (req, res, next) => {
 
 app.use("/", authRoutes);
 app.use("/admin", adminRoutes);
-app.use("/", shopRoutes);
+// app.use("/", shopRoutes);
 
 app.use(get404);
 
