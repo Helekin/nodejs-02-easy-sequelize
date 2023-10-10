@@ -1,10 +1,21 @@
 import Product from "../models/product.js";
+import { validationResult } from "express-validator";
 
 const getAddProduct = (req, res, next) => {
+  let message = req.flash("error");
+
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
     path: "/admin/add-product",
     editing: false,
+    errorMessage: message,
+    validationErrors: [],
   });
 };
 
@@ -13,7 +24,21 @@ const postAddProduct = async (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
+  const countInStock = req.body.countInStock;
+  const brand = req.body.brand;
   const userId = req.user.id;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render("admin/edit-product", {
+      pageTitle: "Add Product",
+      path: "/admin/add-product",
+      editing: false,
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+    });
+  }
 
   try {
     await Product.create({
@@ -21,6 +46,8 @@ const postAddProduct = async (req, res, next) => {
       price: price,
       imageUrl: imageUrl,
       description: description,
+      brand: brand,
+      countInStock: countInStock,
       userId: userId,
     });
 

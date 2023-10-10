@@ -2,21 +2,16 @@ import { DataTypes } from "sequelize";
 
 import sequelize from "../config/db.js";
 
-const Review = sequelize.define("review", {
+const OrderItem = sequelize.define("orderItem", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  rating: {
-    type: DataTypes.DOUBLE,
-    allowNull: false,
-  },
-  comment: {
-    type: DataTypes.STRING,
-    allowNull: true,
+  qty: {
+    type: DataTypes.INTEGER,
   },
 });
 
-export default Review;
+export default OrderItem;

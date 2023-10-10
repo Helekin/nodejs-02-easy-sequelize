@@ -22,11 +22,40 @@
               >Cart</a
             >
           </li>
-          <% if (isAuthenticated) { %>
+          <% if(isAuthenticated && isAdmin) { %>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
+              data-bs-toggle="dropdown"
               href="#"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Admin
+            </a>
+
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item <%= path === '/admin/products' ? 'active' : '' %>"
+                  href="/admin/products"
+                  >Products</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item <%= path === '/admin/add-product' ? 'active' : '' %>"
+                  href="/admin/add-product"
+                  >Add Product</a
+                >
+              </li>
+            </ul>
+          </li>
+          <% } %> <% if (isAuthenticated) { %>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -46,35 +75,6 @@
                 <form action="/logout" method="post">
                   <button class="dropdown-item" type="submit">Logout</button>
                 </form>
-              </li>
-            </ul>
-          </li>
-          <% } %> <% if(isAuthenticated && isAdmin) { %>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Admin
-            </a>
-
-            <ul class="dropdown-menu">
-              <li>
-                <a
-                  class="dropdown-item <%= path === '/admin/products' ? 'active' : '' %>"
-                  href="/"
-                  >Products</a
-                >
-              </li>
-              <li>
-                <a
-                  class="dropdown-item <%= path === '/admin/add-product' ? 'active' : '' %>"
-                  href="/"
-                  >Add Product</a
-                >
               </li>
             </ul>
           </li>

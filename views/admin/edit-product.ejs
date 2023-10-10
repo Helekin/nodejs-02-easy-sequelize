@@ -2,61 +2,120 @@
 <html lang="en">
   <head>
     <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/forms.css" />
-    <link rel="stylesheet" href="/css/product.css" />
   </head>
 
   <body>
     <%- include('../includes/navigation.ejs') %>
+
     <main>
-      <form
-        class="product-form"
-        action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>"
-        method="POST"
-      >
-        <div class="form-control">
-          <label for="title">Title</label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            value="<% if (editing) { %><%= product.title %><% } %>"
-          />
-        </div>
-        <div class="form-control">
-          <label for="imageUrl">Image URL</label>
-          <input
-            type="text"
-            name="imageUrl"
-            id="imageUrl"
-            value="<% if (editing) { %><%= product.imageUrl %><% } %>"
-          />
-        </div>
-        <div class="form-control">
-          <label for="price">Price</label>
-          <input
-            type="number"
-            name="price"
-            id="price"
-            step="0.01"
-            value="<% if (editing) { %><%= product.price %><% } %>"
-          />
-        </div>
-        <div class="form-control">
-          <label for="description">Description</label>
-          <textarea name="description" id="description" rows="5">
+      <div class="row justify-content-md-center">
+        <div class="col-xs-12 col-md-6">
+          <div class="container">
+            <% if (errorMessage) { %>
+            <div class="alert alert-dismissible alert-danger">
+              <%= errorMessage %>
+            </div>
+            <% } %>
+
+            <form
+              action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>"
+              method="POST"
+              novalidate
+            >
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'title') ? 'has-danger' : ''%>"
+              >
+                <label for="title" class="form-label mt-4">Title</label>
+                <input
+                  type="text"
+                  class="form-control <%= validationErrors.find(e => e.path === 'title') ? 'is-invalid' : ''%>"
+                  id="title"
+                  name="title"
+                  placeholder="Enter title"
+                  value="<% if (editing) { %><%= product.title %><% } %>"
+                />
+              </div>
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'price') ? 'has-danger' : ''%>"
+              >
+                <label for="price" class="form-label mt-4">Price</label>
+                <input
+                  type="number"
+                  class="form-control <%= validationErrors.find(e => e.path === 'price') ? 'is-invalid' : ''%>"
+                  id="price"
+                  name="price"
+                  placeholder="Enter price"
+                  step=".01"
+                  value="<% if (editing) { %><%= product.price %><% } %>"
+                />
+              </div>
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'imageUrl') ? 'has-danger' : ''%>"
+              >
+                <label for="imageUrl" class="form-label mt-4">Image URL</label>
+                <input
+                  type="text"
+                  class="form-control <%= validationErrors.find(e => e.path === 'imageUrl') ? 'is-invalid' : ''%>"
+                  id="imageUrl"
+                  name="imageUrl"
+                  placeholder="Enter Image Url"
+                  value="<% if (editing) { %><%= product.imageUrl %><% } %>"
+                />
+              </div>
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'countInStock') ? 'has-danger' : ''%>"
+              >
+                <label for="countInStock" class="form-label mt-4"
+                  >Count In Stock</label
+                >
+                <input
+                  type="number"
+                  class="form-control <%= validationErrors.find(e => e.path === 'countInStock') ? 'is-invalid' : ''%>"
+                  id="countInStock"
+                  name="countInStock"
+                  placeholder="Enter Stock"
+                  step="1"
+                  value="<% if (editing) { %><%= product.countInStock %><% } %>"
+                />
+              </div>
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'brand') ? 'has-danger' : ''%>"
+              >
+                <label for="brand" class="form-label mt-4">Brand</label>
+                <input
+                  type="text"
+                  class="form-control <%= validationErrors.find(e => e.path === 'brand') ? 'is-invalid' : ''%>"
+                  id="brand"
+                  name="brand"
+                  placeholder="Enter brand"
+                  value="<% if (editing) { %><%= product.brand %><% } %>"
+                />
+              </div>
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'description') ? 'has-danger' : ''%>"
+              >
+                <label for="description" class="form-label mt-4"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control <%= validationErrors.find(e => e.path === 'description') ? 'is-invalid' : ''%>"
+                  id="description"
+                  name="description"
+                  placeholder="Enter description"
+                  rows="4"
+                >
 <% if (editing) { %><%= product.description %><% } %></textarea
-          >
+                >
+              </div>
+
+              <button type="submit" class="btn btn-primary mt-4 w-100">
+                <% if (editing) { %> Update Product <% } else { %>Add Product <%
+                } %>
+              </button>
+            </form>
+          </div>
         </div>
-        <% if (editing) { %><input
-          type="hidden"
-          value="<%= product.id %>"
-          name="productId"
-        />
-        <% } %><button class="btn" type="submit">
-          <% if (editing) { %> Update Product <% } else { %>Add Product <% } %>
-        </button>
-      </form>
+      </div>
     </main>
     <%- include('../includes/end.ejs') %>
   </body>

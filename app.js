@@ -13,7 +13,12 @@ import adminRoutes from "./routes/admin.js";
 // import shopRoutes from "./routes/shop.js";
 
 import { get404 } from "./controllers/error.js";
+
 import User from "./models/user.js";
+import Product from "./models/product.js";
+import Review from "./models/review.js";
+import Order from "./models/order.js";
+import OrderItem from "./models/orderItem.js";
 
 const SequelizeDBStore = SequelizeStore(session.Store);
 
@@ -81,13 +86,23 @@ app.use("/admin", adminRoutes);
 
 app.use(get404);
 
-app.use((error, req, res, next) => {
-  res.status(500).render("500", {
-    pageTitle: "Error",
-    path: "/500",
-    isAuthenticated: req.session.isLoggedIn,
-  });
-});
+// app.use((error, req, res, next) => {
+//   res.status(500).render("500", {
+//     pageTitle: "Error",
+//     path: "/500",
+//     isAuthenticated: req.session.isLoggedIn,
+//   });
+// });
+
+User.hasMany(Product);
+Product.belongsTo(User);
+User.hasMany(Review);
+Review.belongsTo(User);
+Product.hasMany(Review);
+Review.belongsTo(Product);
+User.hasMany(Order);
+Order.belongsTo(User);
+Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
   .sync()

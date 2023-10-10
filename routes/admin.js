@@ -1,4 +1,5 @@
 import express from "express";
+import { check } from "express-validator";
 
 import {
   getAddProduct,
@@ -17,7 +18,18 @@ router.get("/add-product", isAuth, isAdmin, getAddProduct);
 
 router.get("/products", isAuth, isAdmin, getProducts);
 
-router.post("/add-product", isAuth, isAdmin, postAddProduct);
+router.post(
+  "/add-product",
+  isAuth,
+  isAdmin,
+  check("title").not().isEmpty().withMessage("This field is required"),
+  check("imageUrl").not().isEmpty().withMessage("This field is required"),
+  check("price").not().isEmpty().withMessage("This field is required"),
+  check("brand").not().isEmpty().withMessage("This field is required"),
+  check("description").not().isEmpty().withMessage("This field is required"),
+  check("countInStock").not().isEmpty().withMessage("This field is required"),
+  postAddProduct
+);
 
 router.get("/edit-product/:productId", isAuth, isAdmin, getEditProduct);
 

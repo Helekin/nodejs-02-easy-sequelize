@@ -44,6 +44,7 @@ const postSignUp = async (req, res, next) => {
       path: "/signup",
       pageTitle: "Signup",
       errorMessage: "Passwords do not match",
+      validationErrors: [],
     });
   }
 
@@ -60,6 +61,7 @@ const postSignUp = async (req, res, next) => {
         path: "/signup",
         pageTitle: "Signup",
         errorMessage: "User already exists",
+        validationErrors: [],
       });
     }
 
@@ -120,6 +122,7 @@ const postLogin = async (req, res, next) => {
         path: "/login",
         pageTitle: "Login",
         errorMessage: "Invalid email or password",
+        validationErrors: [],
       });
     }
 
@@ -130,6 +133,7 @@ const postLogin = async (req, res, next) => {
         path: "/login",
         pageTitle: "Login",
         errorMessage: "Invalid email or password",
+        validationErrors: [],
       });
     }
 
