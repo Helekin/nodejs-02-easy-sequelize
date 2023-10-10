@@ -12,16 +12,7 @@
       <% if (errorMessage) { %>
       <div class="user-message user-message--error"><%= errorMessage %></div>
       <% } %>
-      <form class="login-form" action="/signup" method="POST" novalidate>
-        <div class="form-control">
-          <label for="name">Name</label>
-          <input
-            class="<%= validationErrors.find(e => e.path === 'name') ? 'invalid' : ''%>"
-            type="text"
-            name="name"
-            id="name"
-          />
-        </div>
+      <form class="login-form" action="/login" method="POST" novalidate>
         <div class="form-control">
           <label for="email">E-Mail</label>
           <input
@@ -40,11 +31,8 @@
             id="password"
           />
         </div>
-        <div class="form-control">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" name="confirmPassword" id="confirmPassword" />
-        </div>
-        <button class="btn" type="submit">Signup</button>
+
+        <button class="btn" type="submit">Login</button>
       </form>
     </main>
     <%- include('../includes/end.ejs') %>

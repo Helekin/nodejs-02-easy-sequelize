@@ -41,7 +41,6 @@ const getIndex = async (req, res, next) => {
       prods: products,
       pageTitle: "Shop",
       path: "/",
-      isAuthenticated: true,
     });
   } catch (error) {
     console.error("Error fetching products:", error);

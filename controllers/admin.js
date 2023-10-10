@@ -13,6 +13,7 @@ const postAddProduct = async (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
+  const userId = req.user.id;
 
   try {
     await Product.create({
@@ -20,12 +21,14 @@ const postAddProduct = async (req, res, next) => {
       price: price,
       imageUrl: imageUrl,
       description: description,
+      userId: userId,
     });
 
     res.redirect("/admin/products");
-  } catch (error) {
-    console.error("Error creating product:", error);
-    next(error);
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   }
 };
 

@@ -3,6 +3,8 @@ import { validationResult } from "express-validator";
 
 import User from "../models/user.js";
 
+import generateToken from "../utils/generateToken.js";
+
 const getSignup = (req, res, next) => {
   let message = req.flash("error");
 
@@ -46,7 +48,12 @@ const postSignUp = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({
+      where: { email: email },
+      attributes: {
+        exclude: ["password"],
+      },
+    });
 
     if (user) {
       return res.status(422).render("auth/signup", {
@@ -72,4 +79,80 @@ const postSignUp = async (req, res, next) => {
   }
 };
 
-export { getSignup, postSignUp };
+const getLogin = (req, res, next) => {
+  let message = req.flash("error");
+
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+
+  res.render("auth/login", {
+    path: "/login",
+    pageTitle: "Login",
+    errorMessage: message,
+    validationErrors: [],
+  });
+};
+
+const postLogin = async (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render("auth/login", {
+      path: "/login",
+      pageTitle: "Login",
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+    });
+  }
+
+  try {
+    const user = await User.findOne({ where: { email: email } });
+
+    if (!user) {
+      return res.status(422).render("auth/login", {
+        path: "/login",
+        pageTitle: "Login",
+        errorMessage: "Invalid email or password",
+      });
+    }
+
+    const doMatch = await bcrypt.compare(password, user.password);
+
+    if (!doMatch) {
+      return res.status(422).render("auth/login", {
+        path: "/login",
+        pageTitle: "Login",
+        errorMessage: "Invalid email or password",
+      });
+    }
+
+    generateToken(res, user.id);
+
+    req.session.isLoggedIn = true;
+    req.session.isAdmin = user.isAdmin;
+    req.session.jwt = req.cookies.jwt;
+
+    res.redirect("/");
+  } catch (error) {
+    console.error("Sign In Failed:", error);
+    next(error);
+  }
+};
+
+const postLogout = (req, res, next) => {
+  req.session.destroy((err) => {
+    res.cookie("jwt", "", {
+      httpOnly: true,
+      expires: new Date(0),
+    });
+    res.redirect("/");
+  });
+};
+
+export { getSignup, postSignUp, getLogin, postLogin, postLogout };
