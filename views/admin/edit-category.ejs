@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../includes/head.ejs') %>
+  </head>
+
+  <body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+      <div class="row justify-content-md-center">
+        <div class="col-xs-12 col-md-6">
+          <div class="container">
+            <% if (errorMessage) { %>
+            <div class="alert alert-dismissible alert-danger">
+              <%= errorMessage %>
+            </div>
+            <% } %>
+
+            <form
+              action="/admin/<% if (editing) { %>edit-category<% } else { %>add-category<% } %>"
+              method="POST"
+              novalidate
+            >
+              <div
+                class="form-group <%= validationErrors.find(e => e.path === 'title') ? 'has-danger' : ''%>"
+              >
+                <label for="title" class="form-label mt-4">Title</label>
+                <input
+                  type="text"
+                  class="form-control <%= validationErrors.find(e => e.path === 'title') ? 'is-invalid' : ''%>"
+                  id="title"
+                  name="title"
+                  placeholder="Enter title"
+                  value="<% if (editing) { %><%= category.title %><% } %>"
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary mt-4 w-100">
+                <% if (editing) { %> Update Category <% } else { %>Add Category
+                <% } %>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../includes/end.ejs') %>
+  </body>
+</html>

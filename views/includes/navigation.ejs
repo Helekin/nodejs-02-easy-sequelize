@@ -38,6 +38,20 @@
             <ul class="dropdown-menu">
               <li>
                 <a
+                  class="dropdown-item <%= path === '/admin/categories' ? 'active' : '' %>"
+                  href="/admin/categories"
+                  >Categories</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item <%= path === '/admin/add-category' ? 'active' : '' %>"
+                  href="/admin/add-category"
+                  >Add Category</a
+                >
+              </li>
+              <li>
+                <a
                   class="dropdown-item <%= path === '/admin/products' ? 'active' : '' %>"
                   href="/admin/products"
                   >Products</a

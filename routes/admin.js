@@ -2,6 +2,8 @@ import express from "express";
 import { check } from "express-validator";
 
 import {
+  getAddCategory,
+  postAddCategory,
   getAddProduct,
   postAddProduct,
   getProducts,
@@ -13,6 +15,17 @@ import {
 import { isAuth, isAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+router.get("/add-category", isAuth, isAdmin, getAddCategory);
+
+router.post(
+  "/add-category",
+  isAuth,
+  isAdmin,
+  check("title").not().isEmpty().withMessage("This field is required"),
+
+  postAddCategory
+);
 
 router.get("/add-product", isAuth, isAdmin, getAddProduct);
 
