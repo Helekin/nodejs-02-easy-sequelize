@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../includes/head.ejs') %>
+  </head>
+
+  <body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+      <div class="container">
+        <% if (categories.length > 0) { %>
+        <table class="table table-hover mt-4">
+          <thead>
+            <tr class="table-dark">
+              <th scope="col">Id</th>
+              <th scope="col">Title</th>
+              <th scope="col">Created At</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let category of categories) { %>
+            <tr>
+              <th scope="row"><%= category.id %></th>
+              <td><%= category.title %></td>
+              <td>
+                <%= category.createdAt.getDate() %>/<%=
+                category.createdAt.getMonth() + 1 %>/<%=
+                category.createdAt.getFullYear() %>
+              </td>
+              <td>
+                <div class="d-flex">
+                  <a
+                    href="/admin/edit-category/<%= category.id %>?edit=true"
+                    class="btn btn-primary mx-2"
+                  >
+                    <i class="bi bi-pencil-fill"></i>
+                  </a>
+
+                  <button class="btn btn-danger mx-2">
+                    <i class="bi bi-eye-slash-fill"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <h1>No Categories Found!</h1>
+        <% } %>
+      </div>
+    </main>
+    <%- include('../includes/end.ejs') %>
+  </body>
+</html>

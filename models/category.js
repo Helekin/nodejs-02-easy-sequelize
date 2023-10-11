@@ -13,6 +13,11 @@ const Category = sequelize.define("category", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isVisible: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 });
 
 export default Category;

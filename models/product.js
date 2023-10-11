@@ -42,6 +42,11 @@ const Product = sequelize.define("product", {
   countInStock: {
     type: DataTypes.INTEGER,
   },
+  isVisible: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 });
 
 export default Product;

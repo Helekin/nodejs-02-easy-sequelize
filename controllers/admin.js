@@ -4,6 +4,27 @@ import Category from "../models/category.js";
 import User from "../models/user.js";
 import Product from "../models/product.js";
 
+const getCategories = async (req, res, next) => {
+  try {
+    const categories = await Category.findAll({
+      where: {
+        isVisible: true,
+      },
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.render("admin/categories", {
+      pageTitle: "Categories",
+      path: "/admin/categories",
+      categories: categories,
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
 const getAddCategory = (req, res, next) => {
   let message = req.flash("error");
 
@@ -55,6 +76,83 @@ const postAddCategory = async (req, res, next) => {
     await Category.create({
       title: title.toUpperCase(),
     });
+
+    res.redirect("/admin/categories");
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+const getEditCategory = async (req, res, next) => {
+  const editMode = req.query.edit;
+
+  if (!editMode) {
+    return res.redirect("/");
+  }
+
+  let message = req.flash("error");
+
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+
+  const catId = req.params.categoryId;
+
+  try {
+    const category = await Category.findByPk(catId);
+
+    if (!category) {
+      return res.redirect("/");
+    }
+
+    res.render("admin/edit-category", {
+      pageTitle: "Edit Product",
+      path: "/admin/edit-category",
+      editing: editMode,
+      category: category,
+      errorMessage: message,
+      validationErrors: [],
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+const postEditCategory = async (req, res, next) => {
+  const catId = req.body.categoryId;
+  const title = req.body.title;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).render("admin/edit-category", {
+      pageTitle: "Edit Category",
+      path: "/admin/edit-category",
+      editing: true,
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+    });
+  }
+
+  try {
+    const category = await Category.findByPk(catId);
+
+    if (!category) {
+      return res.redirect("/");
+    }
+
+    await Category.update(
+      {
+        title: title.toUpperCase(),
+      },
+      { where: { id: catId } }
+    );
 
     res.redirect("/admin/categories");
   } catch (err) {
@@ -236,11 +334,14 @@ const postDeleteProduct = async (req, res, next) => {
 };
 
 export {
+  getCategories,
   getAddCategory,
   postAddCategory,
+  getEditCategory,
+  postEditCategory,
+  getProducts,
   getAddProduct,
   postAddProduct,
-  getProducts,
   getEditProduct,
   postEditProduct,
   postDeleteProduct,

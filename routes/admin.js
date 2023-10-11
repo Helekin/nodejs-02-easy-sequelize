@@ -2,19 +2,24 @@ import express from "express";
 import { check } from "express-validator";
 
 import {
+  getCategories,
   getAddCategory,
   postAddCategory,
+  getEditCategory,
   getAddProduct,
   postAddProduct,
   getProducts,
   getEditProduct,
   postEditProduct,
   postDeleteProduct,
+  postEditCategory,
 } from "../controllers/admin.js";
 
 import { isAuth, isAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+router.get("/categories", isAuth, isAdmin, getCategories);
 
 router.get("/add-category", isAuth, isAdmin, getAddCategory);
 
@@ -26,6 +31,10 @@ router.post(
 
   postAddCategory
 );
+
+router.get("/edit-category/:categoryId", isAuth, isAdmin, getEditCategory);
+
+router.post("/edit-category", isAuth, isAdmin, postEditCategory);
 
 router.get("/add-product", isAuth, isAdmin, getAddProduct);
 
@@ -46,7 +55,13 @@ router.post(
 
 router.get("/edit-product/:productId", isAuth, isAdmin, getEditProduct);
 
-router.post("/edit-product", isAuth, isAdmin, postEditProduct);
+router.post(
+  "/edit-product",
+  isAuth,
+  isAdmin,
+  check("title").not().isEmpty().withMessage("This field is required"),
+  postEditProduct
+);
 
 router.post("/delete-product", isAuth, isAdmin, postDeleteProduct);
 

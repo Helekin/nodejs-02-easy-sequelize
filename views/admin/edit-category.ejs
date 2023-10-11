@@ -35,7 +35,13 @@
                   value="<% if (editing) { %><%= category.title %><% } %>"
                 />
               </div>
-
+              <% if (editing) { %>
+              <input
+                type="hidden"
+                value="<%= category.id %>"
+                name="categoryId"
+              />
+              <% } %>
               <button type="submit" class="btn btn-primary mt-4 w-100">
                 <% if (editing) { %> Update Category <% } else { %>Add Category
                 <% } %>
