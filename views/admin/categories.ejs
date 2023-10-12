@@ -37,18 +37,12 @@
                   <a href="/admin/categories/edit-category/<%= category.id %>?edit=true" class="btn btn-primary mx-2">
                     <i class="bi bi-pencil-fill"></i>
                   </a>
-                  <% if(category.isVisible) { %>
-                  <button type="button" class="btn btn-danger mx-2" data-bs-toggle="modal" data-bs-target="#confirmHideModal">
-                    <i class="bi bi-eye-slash-fill"></i>
+                  <button type="button" class="btn <% if(category.isVisible) { %>btn-danger<% } else { %>btn-success<% } %> mx-2" data-bs-toggle="modal" data-bs-target="<% if(category.isVisible) { %>#confirmHideModal<% } else { %>#confirmShowModal<% } %>">
+                    <% if(category.isVisible) { %><i class="bi bi-eye-slash-fill"></i><% } else { %><i class="bi bi-eye-fill"></i><% } %>
                   </button>
-                  <%} else { %>
-                  <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#confirmShowModal">
-                    <i class="bi bi-eye-fill"></i>
-                  </button>
-                  <% } %>
                 </div>
-                <%- include('../includes/showModal.ejs', {field:"category", valueId:category.id}) %>
-                <%- include('../includes/hideModal.ejs', {field:"category", valueId:category.id}) %>
+                <%- include('../includes/showModal.ejs', {field:"category", valueId:category.id, fieldName:"categoryId", fieldAction:"show-category"}) %>
+                <%- include('../includes/hideModal.ejs', {field:"category", valueId:category.id, fieldName:"categoryId", fieldAction:"hide-category"}) %>
               </td>
             </tr>
             <% } %>

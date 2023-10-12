@@ -6,12 +6,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to hide this <% if(field === "category") { %> <%= field %> <% } %>?
+        Are you sure you want to hide this <%= field %>?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <form action="/admin/categories/<% if(field === "category") { %>hide-category<% } else if (field === "product") { %>hide-product<% }%>" method="post">
-          <input type="hidden" value="<% if(field === "category") { %><%= valueId %><% } %>" name="<% if(field === "category") { %>categoryId<% } %>" />
+        <form action="/admin/categories/<%= fieldAction %>" method="post">
+          <input type="hidden" value="<%= valueId %>" name="<%= fieldName %>" />
           <button type="submit" class="btn btn-danger">Hide</button>
         </form>
       </div>

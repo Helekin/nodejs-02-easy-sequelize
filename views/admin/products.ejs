@@ -51,10 +51,12 @@
                   <a href="/admin/products/edit-product/<%= product.id %>?edit=true" class="btn btn-primary mx-2">
                     <i class="bi bi-pencil-fill"></i>
                   </a>
-                  <button class="btn btn-danger w-100 mx-2">
-                    <i class="bi bi-eye-slash-fill"></i>
+                  <button type="button" class="btn <% if(product.isVisible) { %>btn-danger<% } else { %>btn-success<% } %> mx-2" data-bs-toggle="modal" data-bs-target="<% if(product.isVisible) { %>#confirmHideModal<% } else { %>#confirmShowModal<% } %>">
+                    <% if(product.isVisible) { %><i class="bi bi-eye-slash-fill"></i><% } else { %><i class="bi bi-eye-fill"></i><% } %>
                   </button>
                 </div>
+                <%- include('../includes/showModal.ejs', {field:"product", valueId:product.id, fieldName:"productId", fieldAction:"show-product"}) %>
+                <%- include('../includes/hideModal.ejs', {field:"product", valueId:product.id, fieldName:"productId", fieldAction:"hide-product"}) %>
               </td>
             </tr>
             <% } %>
