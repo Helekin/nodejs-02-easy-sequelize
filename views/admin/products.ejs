@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../includes/head.ejs') %>
-  </head>
 
-  <body>
-    <%- include('../includes/navigation.ejs') %>
-    <main>
-      <div class="container">
-        <% if (prods.length > 0) { %>
+<head>
+  <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+  <main>
+    <div class="container">
+      <% if (prods.length > 0) { %>
+      <div class="table-responsive">
         <table class="table table-hover mt-4">
           <thead>
             <tr class="table-dark">
@@ -20,6 +22,7 @@
               <th scope="col">N° Reviews</th>
               <th scope="col">Stock</th>
               <th scope="col">Category</th>
+              <th scope="col">Is Visible</th>
               <th scope="col">Created By</th>
               <th scope="col">Created At</th>
               <th></th>
@@ -36,17 +39,18 @@
               <td><%= product.numReviews %></td>
               <td><%= product.countInStock %></td>
               <td><%= product.category.title %></td>
+              <td><% if(product.isVisible) { %> Yes <% } else { %> No <% } %> </td>
               <td><%= product.user.name %></td>
               <td>
                 <%= product.createdAt.getDate() %>/<%=
-                product.createdAt.getMonth() + 1 %>/<%=
-                product.createdAt.getFullYear() %>
+                  product.createdAt.getMonth() + 1 %>/<%=
+                  product.createdAt.getFullYear() %>
               </td>
               <td>
                 <div class="d-flex">
-                  <button class="btn btn-primary w-100 mx-2">
+                  <a href="/admin/products/edit-product/<%= product.id %>?edit=true" class="btn btn-primary mx-2">
                     <i class="bi bi-pencil-fill"></i>
-                  </button>
+                  </a>
                   <button class="btn btn-danger w-100 mx-2">
                     <i class="bi bi-eye-slash-fill"></i>
                   </button>
@@ -56,11 +60,13 @@
             <% } %>
           </tbody>
         </table>
-        <% } else { %>
-        <h1>No Products Found!</h1>
-        <% } %>
       </div>
-    </main>
-    <%- include('../includes/end.ejs') %>
-  </body>
+      <% } else { %>
+      <h1>No Products Found!</h1>
+      <% } %>
+    </div>
+  </main>
+  <%- include('../includes/end.ejs') %>
+</body>
+
 </html>
