@@ -5,9 +5,6 @@ import Category from "../models/category.js";
 const getCategories = async (req, res, next) => {
   try {
     const categories = await Category.findAll({
-      where: {
-        isVisible: true,
-      },
       order: [["createdAt", "DESC"]],
     });
 
@@ -161,10 +158,62 @@ const postEditCategory = async (req, res, next) => {
   }
 };
 
+const postHideCategory = async (req, res, next) => {
+  const catId = req.body.categoryId;
+
+  try {
+    const category = await Category.findByPk(catId);
+
+    if (!category) {
+      return res.redirect("/admin/categories");
+    }
+
+    await Category.update(
+      {
+        isVisible: false,
+      },
+      { where: { id: catId } }
+    );
+
+    res.redirect("/admin/categories");
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+const postShowCategory = async (req, res, next) => {
+  const catId = req.body.categoryId;
+
+  try {
+    const category = await Category.findByPk(catId);
+
+    if (!category) {
+      return res.redirect("/admin/categories");
+    }
+
+    await Category.update(
+      {
+        isVisible: true,
+      },
+      { where: { id: catId } }
+    );
+
+    res.redirect("/admin/categories");
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
 export {
   getCategories,
   getAddCategory,
   postAddCategory,
   getEditCategory,
   postEditCategory,
+  postHideCategory,
+  postShowCategory,
 };

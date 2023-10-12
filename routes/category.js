@@ -7,6 +7,8 @@ import {
   postAddCategory,
   getEditCategory,
   postEditCategory,
+  postHideCategory,
+  postShowCategory,
 } from "../controllers/category.js";
 
 import { isAuth, isAdmin } from "../middleware/authMiddleware.js";
@@ -35,5 +37,9 @@ router.post(
   check("title").not().isEmpty().withMessage("This field is required"),
   postEditCategory
 );
+
+router.post("/hide-category", isAuth, isAdmin, postHideCategory);
+
+router.post("/show-category", isAuth, isAdmin, postShowCategory);
 
 export default router;
