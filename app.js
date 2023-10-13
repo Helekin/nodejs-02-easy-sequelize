@@ -18,7 +18,7 @@ import OrderItem from "./models/orderItem.js";
 import authRoutes from "./routes/auth.js";
 import categoryRoutes from "./routes/category.js";
 import productRoutes from "./routes/product.js";
-// import shopRoutes from "./routes/shop.js";
+import shopRoutes from "./routes/shop.js";
 
 import { get404 } from "./controllers/error.js";
 
@@ -85,7 +85,7 @@ app.use(async (req, res, next) => {
 app.use("/", authRoutes);
 app.use("/admin/categories", categoryRoutes);
 app.use("/admin/products", productRoutes);
-// app.use("/", shopRoutes);
+app.use("/", shopRoutes);
 
 app.use(get404);
 

@@ -9,10 +9,10 @@ const getProducts = async (req, res, next) => {
       order: [["createdAt", "DESC"]],
     });
 
-    res.render("admin/products", {
+    res.render("shop/index", {
       prods: products,
-      pageTitle: "Admin Products",
-      path: "/admin/products",
+      pageTitle: "Welcome to Easy Shop",
+      path: "/",
     });
   } catch (err) {
     const error = new Error(err);
