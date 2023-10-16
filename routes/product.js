@@ -7,7 +7,6 @@ import {
   getProducts,
   getEditProduct,
   postEditProduct,
-  postDeleteProduct,
 } from "../controllers/product.js";
 
 import { isAuth, isAdmin } from "../middleware/authMiddleware.js";
@@ -45,7 +44,5 @@ router.post(
   check("countInStock").not().isEmpty().withMessage("This field is required"),
   postEditProduct
 );
-
-router.post("/delete-product", isAuth, isAdmin, postDeleteProduct);
 
 export default router;

@@ -1,24 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('../includes/head.ejs') %>
-  </head>
 
-  <body>
-    <%- include('../includes/navigation.ejs') %>
-    <main class="centered">
-      <h1><%= product.title %></h1>
-      <hr />
-      <div>
-        <img class="image" src="<%= product.imageUrl %>" alt="<%= product.title %>" />
+<head>
+  <%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+  <main>
+    <div class="container">
+      <a class="btn btn-outline-primary my-3" href="/"><i class="bi bi-arrow-left"></i> Get Back</a>
+
+      <div class="row">
+        <div class="col-md-5">
+          <img class="img-fluid" src="<%= product.imageUrl %>" alt="<%= product.title %>" />
+        </div>
+        <div class="col-md-4">
+          <ul class="list-group flush">
+            <li class="list-group-item">
+              <h3><%= product.title %></h3>
+            </li>
+            <li class="list-group-item">
+              <p>
+                <%- include('../includes/rating.ejs', { value:product.rating, text:product.numReviews}) %>
+              </p>
+            </li>
+            <li class="list-group-item">Price: <%= product.price %></li>
+            <li class="list-group-item">Description: <%= product.description %></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <ul class="list-group flush">
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col">Price:</div>
+                  <div class="col">
+                    <strong><%= product.price %></strong>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col"><% if(product.countInStock > 0) { %>In Stock<% } else { %>Out of Stock<% } %></div>
+                </div>
+              </li>
+              <li class="list-group-item">Price: <%= product.price %></li>
+              <li class="list-group-item">Description: <%= product.description %></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <h2><%= product.price %></h2>
-      <p><%= product.description %></p>
-      <form action="/cart" method="POST">
-        <button class="btn" type="submit">Add to Cart</button>
-        <input type="hidden" name="productId" value="<%= product.id %>" />
-      </form>
-    </main>
-    <%- include('../includes/end.ejs') %>
-  </body>
+    </div>
+  </main>
+  <%- include('../includes/end.ejs') %>
+</body>
+
 </html>

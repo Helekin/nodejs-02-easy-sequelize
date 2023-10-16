@@ -14,17 +14,16 @@
         <% for (let product of prods) { %>
         <div class="col-md-3">
           <div class="card my-3 p-3 rounded">
-            <a href="">
+            <a href="/product/<%= product.id %>">
               <img class="card-img-top img-fluid" src="<%= product.imageUrl %>" alt="<%= product.title %>" />
             </a>
             <div class="card-body">
-              <h5 class="card-title">
+              <h5 class="product-title">
                 <strong><%= product.title %></strong>
               </h5>
-              <div class="card-text">
-                <div class="rating"><%= product.rating %> stars</div>
-                <div class="reviews"><%= product.numReviews %> reviews</div>
-              </div>
+              <p>
+                <%- include('../includes/rating.ejs', { value:product.rating, text:product.numReviews}) %>
+              </p>
               <h3 class="card-text"><%= product.price %></h3>
             </div>
           </div>

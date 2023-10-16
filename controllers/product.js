@@ -202,29 +202,10 @@ const postEditProduct = async (req, res, next) => {
   }
 };
 
-const postDeleteProduct = async (req, res, next) => {
-  const prodId = req.body.productId;
-
-  await Product.destroy({
-    where: {
-      id: prodId,
-    },
-  });
-
-  res.redirect("/admin/products");
-  try {
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  }
-};
-
 export {
   getProducts,
   getAddProduct,
   postAddProduct,
   getEditProduct,
   postEditProduct,
-  postDeleteProduct,
 };

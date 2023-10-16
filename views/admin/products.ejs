@@ -32,15 +32,15 @@
             <% for (let product of prods) { %>
             <tr>
               <th scope="row"><%= product.id %></th>
-              <td><%= product.title %></td>
+              <td class="product-title"><%= product.title %></td>
               <td><%= product.price.toFixed(2) %></td>
-              <td><%= product.brand %></td>
+              <td class="brand-title"><%= product.brand %></td>
               <td><%= product.rating %></td>
               <td><%= product.numReviews %></td>
               <td><%= product.countInStock %></td>
               <td><%= product.category.title %></td>
               <td><% if(product.isVisible) { %> Yes <% } else { %> No <% } %> </td>
-              <td><%= product.user.name %></td>
+              <td class="created-by-title"><%= product.user.name %></td>
               <td>
                 <%= product.createdAt.getDate() %>/<%=
                   product.createdAt.getMonth() + 1 %>/<%=

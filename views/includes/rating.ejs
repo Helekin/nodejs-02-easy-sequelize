@@ -1,11 +1,10 @@
 <div class="rating">
   <span>
-    {value >= 1 ? (
-    <FaStar />
-    ) : value >= 0.5 ? (
-    <FaStarHalfAlt />
-    ) : (
-    <FaRegStar />
-    )}
+    <% if(value >= 1) { %><i class="bi bi-star-fill"></i><% } else if(value >= 0.5) { %><i class="bi bi-star-half"></i><% } else { %><i class="bi bi-star"></i><% } %>
+    <% if(value >= 2) { %><i class="bi bi-star-fill"></i><% } else if(value >= 1.5) { %><i class="bi bi-star-half"></i><% } else { %><i class="bi bi-star"></i><% } %>
+    <% if(value >= 3) { %><i class="bi bi-star-fill"></i><% } else if(value >= 2.5) { %><i class="bi bi-star-half"></i><% } else { %><i class="bi bi-star"></i><% } %>
+    <% if(value >= 4) { %><i class="bi bi-star-fill"></i><% } else if(value >= 3.5) { %><i class="bi bi-star-half"></i><% } else { %><i class="bi bi-star"></i><% } %>
+    <% if(value >= 5) { %><i class="bi bi-star-fill"></i><% } else if(value >= 4.5) { %><i class="bi bi-star-half"></i><% } else { %><i class="bi bi-star"></i><% } %>
   </span>
+  <span class="rating-text"><%= text %> reviews</span>
 </div>
