@@ -42,11 +42,20 @@
               </li>
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col"><% if(product.countInStock > 0) { %>In Stock<% } else { %>Out of Stock<% } %></div>
+                  <div class="col">Status:</div>
+                  <div class="col"><strong><% if(product.countInStock > 0) { %>In Stock<% } else { %>Out of Stock<% } %></strong></div>
                 </div>
               </li>
-              <li class="list-group-item">Price: <%= product.price %></li>
-              <li class="list-group-item">Description: <%= product.description %></li>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col">Qty:</div>
+                  <div class="col">
+                    <select class="form-select" id="qty" name="qty">
+
+                    </select>
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
