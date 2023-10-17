@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
   <%- include('../includes/head.ejs') %>
@@ -8,53 +8,60 @@
 <body>
   <%- include('../includes/navigation.ejs') %>
   <main>
-    <div class="container">
-      <a class="btn btn-outline-primary my-3" href="/"><i class="bi bi-arrow-left"></i> Get Back</a>
+    <div class='container'>
+      <a class='btn btn-outline-primary my-3' href='/'><i class='bi bi-arrow-left'></i> Get Back</a>
 
-      <div class="row">
-        <div class="col-md-5">
-          <img class="img-fluid" src="<%= product.imageUrl %>" alt="<%= product.title %>" />
+      <div class='row'>
+        <div class='col-md-5'>
+          <img class='img-fluid' src='<%= product.imageUrl %>' alt='<%= product.title %>' />
         </div>
-        <div class="col-md-4">
-          <ul class="list-group flush">
-            <li class="list-group-item">
+        <div class='col-md-4'>
+          <ul class='list-group flush'>
+            <li class='list-group-item'>
               <h3><%= product.title %></h3>
             </li>
-            <li class="list-group-item">
+            <li class='list-group-item'>
               <p>
                 <%- include('../includes/rating.ejs', { value:product.rating, text:product.numReviews}) %>
               </p>
             </li>
-            <li class="list-group-item">Price: <%= product.price %></li>
-            <li class="list-group-item">Description: <%= product.description %></li>
+            <li class='list-group-item'>Price: <%= product.price %></li>
+            <li class='list-group-item'>Description: <%= product.description %></li>
           </ul>
         </div>
-        <div class="col-md-3">
-          <div class="card">
-            <ul class="list-group flush">
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col">Price:</div>
-                  <div class="col">
+        <div class='col-md-3'>
+          <div class='card'>
+            <ul class='list-group flush'>
+              <li class='list-group-item'>
+                <div class='row'>
+                  <div class='col'>Price:</div>
+                  <div class='col'>
                     <strong><%= product.price %></strong>
                   </div>
                 </div>
               </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col">Status:</div>
-                  <div class="col"><strong><% if(product.countInStock > 0) { %>In Stock<% } else { %>Out of Stock<% } %></strong></div>
+              <li class='list-group-item'>
+                <div class='row'>
+                  <div class='col'>Status:</div>
+                  <div class='col'><strong><% if(product.countInStock > 0) { %>In Stock<% } else { %>Out of Stock<% } %></strong></div>
                 </div>
               </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col">Qty:</div>
-                  <div class="col">
-                    <select class="form-select" id="qty" name="qty">
-
+              <li class='list-group-item'>
+                <div class='row'>
+                  <div class='col'>Qty:</div>
+                  <div class='col'>
+                    <select class='form-select' id='qty' name='qty'>
+                      <% for(let x = 0; x < product.countInStock; x++) { %>
+                      <option value='<%= x + 1 %>'><%= x + 1 %></option>
+                      <% } %>
                     </select>
                   </div>
                 </div>
+              </li>
+              <li class='list-group-item'>
+                <button class='btn btn-primary w-100' type='button' data-product='<%- JSON.stringify(product) %>' <%if(product.countInStock === 0) { %>disabled<% } %>>
+                  Add To Cart
+                </button>
               </li>
             </ul>
           </div>

@@ -1,18 +1,18 @@
-<div class="modal fade" id="confirmHideModal" tabindex="-1" aria-labelledby="confirmHideModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="confirmHideModalLabel">confirmation to hide <%= field %></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class='modal fade' id='confirmHideModal' tabindex='-1' aria-labelledby='confirmHideModalLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title' id='confirmHideModalLabel'>confirmation to hide <%= field %></h5>
+        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
       </div>
-      <div class="modal-body">
+      <div class='modal-body'>
         Are you sure you want to hide this <%= field %>?
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <form action="/admin/categories/<%= fieldAction %>" method="post">
-          <input type="hidden" value="<%= valueId %>" name="<%= fieldName %>" />
-          <button type="submit" class="btn btn-danger">Hide</button>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancel</button>
+        <form action='/admin/categories/<%= fieldAction %>' method='post'>
+          <input type='hidden' value='<%= valueId %>' name='<%= fieldName %>' />
+          <button type='submit' class='btn btn-danger'>Hide</button>
         </form>
       </div>
     </div>

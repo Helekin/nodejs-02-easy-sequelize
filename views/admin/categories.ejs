@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
   <%- include('../includes/head.ejs') %>
@@ -8,23 +8,23 @@
 <body>
   <%- include('../includes/navigation.ejs') %>
   <main>
-    <div class="container">
+    <div class='container'>
       <% if (categories.length > 0) { %>
-      <div class="table-responsive">
-        <table class="table table-hover mt-4">
+      <div class='table-responsive'>
+        <table class='table table-hover mt-4'>
           <thead>
-            <tr class="table-dark">
-              <th scope="col">Id</th>
-              <th scope="col">Title</th>
-              <th scope="col">Is Visible</th>
-              <th scope="col">Created At</th>
+            <tr class='table-dark'>
+              <th scope='col'>Id</th>
+              <th scope='col'>Title</th>
+              <th scope='col'>Is Visible</th>
+              <th scope='col'>Created At</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <% for (let category of categories) { %>
             <tr>
-              <th scope="row"><%= category.id %></th>
+              <th scope='row'><%= category.id %></th>
               <td><%= category.title %></td>
               <td><% if(category.isVisible) { %> Yes <% } else { %> No <% } %> </td>
               <td>
@@ -33,16 +33,16 @@
                   category.createdAt.getFullYear() %>
               </td>
               <td>
-                <div class="d-flex">
-                  <a href="/admin/categories/edit-category/<%= category.id %>?edit=true" class="btn btn-primary mx-2">
-                    <i class="bi bi-pencil-fill"></i>
+                <div class='d-flex'>
+                  <a href='/admin/categories/edit-category/<%= category.id %>?edit=true' class='btn btn-primary mx-2'>
+                    <i class='bi bi-pencil-fill'></i>
                   </a>
-                  <button type="button" class="btn <% if(category.isVisible) { %>btn-danger<% } else { %>btn-success<% } %> mx-2" data-bs-toggle="modal" data-bs-target="<% if(category.isVisible) { %>#confirmHideModal<% } else { %>#confirmShowModal<% } %>">
-                    <% if(category.isVisible) { %><i class="bi bi-eye-slash-fill"></i><% } else { %><i class="bi bi-eye-fill"></i><% } %>
+                  <button type='button' class='btn <% if(category.isVisible) { %>btn-danger<% } else { %>btn-success<% } %> mx-2' data-bs-toggle='modal' data-bs-target='<% if(category.isVisible) { %>#confirmHideModal<% } else { %>#confirmShowModal<% } %>'>
+                    <% if(category.isVisible) { %><i class='bi bi-eye-slash-fill'></i><% } else { %><i class='bi bi-eye-fill'></i><% } %>
                   </button>
                 </div>
-                <%- include('../includes/showModal.ejs', {field:"category", valueId:category.id, fieldName:"categoryId", fieldAction:"show-category"}) %>
-                <%- include('../includes/hideModal.ejs', {field:"category", valueId:category.id, fieldName:"categoryId", fieldAction:"hide-category"}) %>
+                <%- include('../includes/showModal.ejs', {field:'category', valueId:category.id, fieldName:'categoryId', fieldAction:'show-category'}) %>
+                <%- include('../includes/hideModal.ejs', {field:'category', valueId:category.id, fieldName:'categoryId', fieldAction:'hide-category'}) %>
               </td>
             </tr>
             <% } %>
