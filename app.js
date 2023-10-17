@@ -5,6 +5,7 @@ import session from "express-session";
 import SequelizeStore from "connect-session-sequelize";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 import sequelize from "./config/db.js";
 
@@ -21,6 +22,8 @@ import productRoutes from "./routes/product.js";
 import shopRoutes from "./routes/shop.js";
 
 import { get404 } from "./controllers/error.js";
+
+dotenv.config();
 
 const SequelizeDBStore = SequelizeStore(session.Store);
 
@@ -42,7 +45,7 @@ const sessionStore = new SequelizeDBStore({
 
 app.use(
   session({
-    secret: "secret_session_shop",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
@@ -57,28 +60,16 @@ app.use(cookieParser());
 app.use(flash());
 
 app.use(async (req, res, next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.token = req.cookies.jwt;
-
-  let token = req.cookies.jwt;
-
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, "secret_session_shop");
-
-      const user = await User.findByPk(decoded.userId, {
-        attributes: {
-          exclude: ["password"],
-        },
-      });
-
-      res.locals.isAdmin = user.isAdmin;
-      req.user = user;
-    } catch (error) {
-      console.log(error);
-    }
+  if (req.session.isLogged) {
+    res.locals.isAuthenticated = true;
+    res.locals.token = req.cookies.jwt;
+    res.locals.isAdmin = req.session.isAdmin;
+  } else {
+    res.locals.isAuthenticated = false;
+    res.locals.token = req.cookies.jwt;
+    res.locals.isAdmin = req.session.isAdmin;
   }
-
+  console.log(res.locals.isAuthenticated);
   next();
 });
 

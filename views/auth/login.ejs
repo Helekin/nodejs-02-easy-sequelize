@@ -1,54 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <%- include('../includes/head.ejs') %>
-  </head>
+<html lang='en'>
 
-  <body>
-    <%- include('../includes/navigation.ejs') %>
-    <main>
-      <div class="row justify-content-md-center">
-        <div class="col-xs-12 col-md-6">
-          <div class="container">
-            <% if (errorMessage) { %>
-            <div class="alert alert-dismissible alert-danger">
-              <%= errorMessage %>
-            </div>
-            <% } %>
+<head>
+  <%- include('../includes/head.ejs') %>
+</head>
 
-            <form action="/login" method="POST" novalidate>
-              <div
-                class="form-group <%= validationErrors.find(e => e.path === 'email') ? 'has-danger' : ''%>"
-              >
-                <label for="email" class="form-label mt-4">Email address</label>
-                <input
-                  type="email"
-                  class="form-control <%= validationErrors.find(e => e.path === 'email') ? 'is-invalid' : ''%>"
-                  id="email"
-                  name="email"
-                  placeholder="Enter email"
-                />
-              </div>
-              <div
-                class="form-group <%= validationErrors.find(e => e.path === 'password') ? 'has-danger' : ''%>"
-              >
-                <label for="password" class="form-label mt-4">Password</label>
-                <input
-                  type="password"
-                  class="form-control <%= validationErrors.find(e => e.path === 'password') ? 'is-invalid' : ''%>"
-                  id="password"
-                  name="password"
-                  placeholder="Enter password"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary mt-4 w-100">
-                Login
-              </button>
-            </form>
+<body>
+  <%- include('../includes/navigation.ejs') %>
+  <main>
+    <div class='row justify-content-md-center'>
+      <div class='col-xs-12 col-md-6'>
+        <div class='container'>
+          <% if (errorMessage) { %>
+          <div class='alert alert-dismissible alert-danger'>
+            <%= errorMessage %>
           </div>
+          <% } %>
+
+          <form action='/login' method='POST' novalidate>
+            <div class='form-group <%= validationErrors.find(e => e.path === 'email') ? 'has-danger' : ''%>'>
+              <label for='email' class='form-label mt-4'>Email address</label>
+              <input type='email' class='form-control <%= validationErrors.find(e => e.path === 'email') ? 'is-invalid' : ''%>' id='email' name='email' placeholder='Enter email' />
+            </div>
+            <div class='form-group <%= validationErrors.find(e => e.path === 'password') ? 'has-danger' : ''%>'>
+              <label for='password' class='form-label mt-4'>Password</label>
+              <input type='password' class='form-control <%= validationErrors.find(e => e.path === 'password') ? 'is-invalid' : ''%>' id='password' name='password' placeholder='Enter password' />
+            </div>
+            <button type='submit' class='btn btn-primary mt-4 w-100'>
+              Login
+            </button>
+          </form>
         </div>
       </div>
-    </main>
-    <%- include('../includes/end.ejs') %>
-  </body>
+    </div>
+  </main>
+  <%- include('../includes/end.ejs') %>
+</body>
+
 </html>

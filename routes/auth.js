@@ -9,11 +9,13 @@ import {
   postSignUp,
 } from "../controllers/auth.js";
 
+import { isLoggedIn } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-router.get("/signup", getSignup);
+router.get("/signup", isLoggedIn, getSignup);
 
-router.get("/login", getLogin);
+router.get("/login", isLoggedIn, getLogin);
 
 router.post(
   "/signup",

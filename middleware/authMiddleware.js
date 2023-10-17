@@ -6,6 +6,14 @@ const isAuth = (req, res, next) => {
   next();
 };
 
+const isLoggedIn = (req, res, next) => {
+  if (req.session.isLoggedIn) {
+    return res.redirect("/");
+  }
+
+  next();
+};
+
 const isAdmin = (req, res, next) => {
   if (!req.session.isAdmin) {
     return res.redirect("/");
@@ -14,4 +22,4 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-export { isAuth, isAdmin };
+export { isAuth, isAdmin, isLoggedIn };

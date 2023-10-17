@@ -143,7 +143,11 @@ const postLogin = async (req, res, next) => {
     req.session.isAdmin = user.isAdmin;
     req.session.jwt = req.cookies.jwt;
 
-    res.redirect("/");
+    console.log(req.session.isLoggedIn);
+
+    if (req.session.isLoggedIn) {
+      res.redirect("/");
+    }
   } catch (err) {
     const error = new Error(err);
     error.httpStatusCode = 500;
