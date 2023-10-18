@@ -1,20 +1,19 @@
-import path from "path";
-import express from "express";
 import flash from "connect-flash";
-import session from "express-session";
 import SequelizeStore from "connect-session-sequelize";
 import cookieParser from "cookie-parser";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import express from "express";
+import session from "express-session";
+import path from "path";
 
 import sequelize from "./config/db.js";
 
-import User from "./models/user.js";
 import Category from "./models/category.js";
-import Product from "./models/product.js";
-import Review from "./models/review.js";
 import Order from "./models/order.js";
 import OrderItem from "./models/orderItem.js";
+import Product from "./models/product.js";
+import Review from "./models/review.js";
+import User from "./models/user.js";
 
 import authRoutes from "./routes/auth.js";
 import categoryRoutes from "./routes/category.js";
@@ -59,18 +58,38 @@ app.use(cookieParser());
 
 app.use(flash());
 
-app.use(async (req, res, next) => {
-  if (req.session.isLogged) {
-    res.locals.isAuthenticated = true;
-    res.locals.token = req.cookies.jwt;
-    res.locals.isAdmin = req.session.isAdmin;
-  } else {
-    res.locals.isAuthenticated = false;
-    res.locals.token = req.cookies.jwt;
-    res.locals.isAdmin = req.session.isAdmin;
-  }
-  console.log(res.locals.isAuthenticated);
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.token = req.cookies.jwt;
+  res.locals.isAdmin = req.session.isAdmin;
+
   next();
+});
+
+app.use(async (req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+
+  try {
+    const user = await User.findByPk(req.session.user.id, {
+      attributes: {
+        exclude: ["password"],
+      },
+    });
+
+    if (!user) {
+      return next();
+    }
+
+    req.user = user;
+
+    next();
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
 });
 
 app.use("/", authRoutes);
