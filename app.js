@@ -19,6 +19,7 @@ import authRoutes from "./routes/auth.js";
 import categoryRoutes from "./routes/category.js";
 import productRoutes from "./routes/product.js";
 import shopRoutes from "./routes/shop.js";
+import cartRoutes from "./routes/cart.js";
 
 import { get404 } from "./controllers/error.js";
 
@@ -93,9 +94,10 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/", authRoutes);
+app.use("/", shopRoutes);
 app.use("/admin/categories", categoryRoutes);
 app.use("/admin/products", productRoutes);
-app.use("/", shopRoutes);
+app.use("/cart", cartRoutes);
 
 app.use(get404);
 

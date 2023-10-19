@@ -1,6 +1,6 @@
 ## About The Project
 
-This repository contains a comprehensive exercise set covering sections 10 & 11 of the Udemy course, "NodeJS - The Complete Guide (MVC, REST APIs, GraphQL, Deno)," instructed by Maximilian Schwarzmüller. The content is up-to-date as of May 2023.
+This repository contains a comprehensive exercise set covering sections 10 & 11 of the Udemy course, "NodeJS - The Complete Guide (MVC, REST APIs, GraphQL, Deno)" instructed by Maximilian Schwarzmüller. The content is up-to-date as of May 2023.
 
 This iteration might feature alterations compared to the initial course code, including modifications in file names, functions, or variables.
 

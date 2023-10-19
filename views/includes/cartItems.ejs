@@ -1,0 +1,47 @@
+<script>
+  const cart = JSON.parse(localStorage.getItem('cart'));
+
+  if (cart && cart.cartItems.length > 0) {
+    cart.cartItems.forEach(item => {
+
+      let qtyOptions = '';
+
+      for (let x = 0; x < item.countInStock; x++) {
+        const isSelected = x + 1 === item.qty ? 'selected' : '';
+        qtyOptions += `<option value='${x + 1}' ${isSelected}>${x + 1}</option>`;
+      }
+
+      const itemHtml = `
+<ul class='list-group'>
+    <li class='list-group-item'>
+        <div class='row'>
+            <div class='col-md-2'>
+                <img src='${item.imageUrl}' alt='{item.title}' class='img-fluid' />
+            </div>
+            <div class='col-md-3'>
+                <h5>${item.title}</h5>
+            </div>
+            <div class='col-md-2'>
+                $${item.price}
+            </div>
+            <div class='col-md-2'>
+                <select class='form-select' id='qty' name='qty'>
+                    ${qtyOptions}
+                </select>
+            </div>
+            <div class='col-md-2'>
+                <button class="btn btn-primary" type='button' data-product-id='${item.id}'><i class='bi bi-trash-fill'></i></button>
+            </div>
+        </div>
+    </li>
+</ul>`;
+
+      document.write(itemHtml);
+    });
+  } else {
+    document.write(`
+<div class='alert alert-dismissible alert-info'>
+    <strong>Your cart is Empty!</strong><a href='/' class='alert-link'>Go back to shop</a>
+</div>`);
+  }
+</script>
