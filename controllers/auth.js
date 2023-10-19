@@ -144,8 +144,6 @@ const postLogin = async (req, res, next) => {
     req.session.jwt = req.cookies.jwt;
     req.session.user = user;
 
-    console.log(req.session.user.id);
-
     return req.session.save((err) => {
       console.log(err);
       res.redirect("/");
